@@ -7,16 +7,30 @@ import sys, httplib2, json, csv;
 
 # For PRODUCTION please use creds.csv
 # For TESTING Enter your info:
+pressEnter = raw_input("Press Enter to login with creds.csv file")
+credsCsvFile = open('creds.csv')
+csvCreds = csv.reader(credsCsvFile)
+csvCredsList = list(csvCreds)
 
-username = "";
-password = "";
-integratorKey = "";
+usersInCSV = []
+for row in csvCredsList:
+
+    usersInCSV.append(""+''.join(row))
+
+UN1 = usersInCSV[0]
+PW1 = usersInCSV[1]
+IK1 = usersInCSV[2]
+
+username = UN1
+password = PW1
+integratorKey = IK1
 
 authenticateStr = "<DocuSignCredentials>" \
                     "<Username>" + username + "</Username>" \
                     "<Password>" + password + "</Password>" \
                     "<IntegratorKey>" + integratorKey + "</IntegratorKey>" \
                     "</DocuSignCredentials>";
+
 #
 # STEP 1 - Login
 #
@@ -43,9 +57,32 @@ print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
 # STEP 2 - Add the admin user Id and the csv file of the users you are sharing
 #
 
-adminUser= raw_input("Enter the UserId that is gaining access to multiple user's folders: ")
+print ('\nWhat would you like to do?\n'
+                     '\n[1] Share To'
+                     '\n[2] Share From'
+                     '\n[3] Remove Sharing')
 
-sharedOption = raw_input("Enter shared_to to share the users folders with the admin or enter not_shared to remove access: ")
+multi = int(raw_input("\nPlease enter your selection: "))
+
+sharedOption = ""
+
+if multi == 1:
+    sharedOption = 'shared_to'
+elif multi== 2:
+    sharedOption = 'shared_from'
+elif multi== 3:
+    sharedOption = 'not_shared'
+else:
+    print"\nInvalid Choice"
+    print ('\nWhat would you like to do?\n'
+                         '\n[1] Share To'
+                         '\n[2] Share From'
+                         '\n[3] Remove Sharing')
+    int(raw_input("\nPlease enter your selection: "))
+
+#print sharedOption
+
+adminUser= raw_input("Enter the UserId that is gaining access to multiple user's folders: ")
 
 csvFile = raw_input("Enter CSV Filename (include .csv to name): ")
 
@@ -62,7 +99,8 @@ for row in csv_list:
 
 newData = "" +''.join(listData);
 
-print newData
+#uncomment newData to see users passed in API call
+#print newData
 
 
 
@@ -81,7 +119,7 @@ envelopeDef =   "{\"sharedAccess\":[{" + \
 
 requestBody = envelopeDef;
 
-print requestBody;
+#print requestBody;
 
 # append "/envelopes" to the baseUrl and use in the request
 url = baseUrl + "/shared_access";
