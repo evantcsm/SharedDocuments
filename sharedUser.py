@@ -7,16 +7,30 @@ import sys, httplib2, json, csv;
 
 # For PRODUCTION please use creds.csv
 # For TESTING Enter your info:
+pressEnter = raw_input("Press Enter to login with creds.csv file")
+credsCsvFile = open('creds.csv')
+csvCreds = csv.reader(credsCsvFile)
+csvCredsList = list(csvCreds)
 
-username = "";
-password = "";
-integratorKey = "";
+usersInCSV = []
+for row in csvCredsList:
+
+    usersInCSV.append(""+''.join(row))
+
+UN1 = usersInCSV[0]
+PW1 = usersInCSV[1]
+IK1 = usersInCSV[2]
+
+username = UN1
+password = PW1
+integratorKey = IK1
 
 authenticateStr = "<DocuSignCredentials>" \
                     "<Username>" + username + "</Username>" \
                     "<Password>" + password + "</Password>" \
                     "<IntegratorKey>" + integratorKey + "</IntegratorKey>" \
                     "</DocuSignCredentials>";
+
 #
 # STEP 1 - Login
 #
@@ -62,7 +76,8 @@ for row in csv_list:
 
 newData = "" +''.join(listData);
 
-print newData
+#uncomment newData to see users passed in API call
+#print newData
 
 
 
