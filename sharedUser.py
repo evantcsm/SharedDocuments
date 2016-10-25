@@ -1,11 +1,13 @@
 # Share multiple users folders with 1 user
-#Create a CSV file with the users that will be shared with the admin user 
+#Create a CSV file with the users that will be shared with the admin user
 #Authored by Evan and Julius
 #Disclaimer
 
 import sys, httplib2, json, csv;
 
-# Enter your info:
+# For PRODUCTION please use creds.csv
+# For TESTING Enter your info:
+
 username = "";
 password = "";
 integratorKey = "";
@@ -24,7 +26,7 @@ http = httplib2.Http();
 response, content = http.request(url, 'GET', headers=headers);
 
 status = response.get('status');
-if (status != '200'): 
+if (status != '200'):
     print("Error calling webservice, status is: %s" % status); sys.exit();
 
 # get the baseUrl and accountId from the response body
@@ -87,7 +89,7 @@ headers = {'X-DocuSign-Authentication': authenticateStr, 'Content-Type': 'applic
 http = httplib2.Http();
 response, content = http.request(url, 'PUT', headers=headers, body=requestBody);
 status = response.get('status');
-if (status != '201' or '200'): 
+if (status != '201' or '200'):
     print("Error calling webservice, status is: %s\nError description - %s" % (status, content)); sys.exit();
 data = json.loads(content);
 #envId = data.get('envelopeId');
