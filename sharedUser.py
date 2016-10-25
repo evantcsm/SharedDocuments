@@ -57,9 +57,32 @@ print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
 # STEP 2 - Add the admin user Id and the csv file of the users you are sharing
 #
 
-adminUser= raw_input("Enter the UserId that is gaining access to multiple user's folders: ")
+print ('\nWhat would you like to do?\n'
+                     '\n[1] Share To'
+                     '\n[2] Share From'
+                     '\n[3] Remove Sharing')
 
-sharedOption = raw_input("Enter shared_to to share the users folders with the admin or enter not_shared to remove access: ")
+multi = int(raw_input("\nPlease enter your selection: "))
+
+sharedOption = ""
+
+if multi == 1:
+    sharedOption = 'shared_to'
+elif multi== 2:
+    sharedOption = 'shared_from'
+elif multi== 3:
+    sharedOption = 'not_shared'
+else:
+    print"\nInvalid Choice"
+    print ('\nWhat would you like to do?\n'
+                         '\n[1] Share To'
+                         '\n[2] Share From'
+                         '\n[3] Remove Sharing')
+    int(raw_input("\nPlease enter your selection: "))
+
+#print sharedOption
+
+adminUser= raw_input("Enter the UserId that is gaining access to multiple user's folders: ")
 
 csvFile = raw_input("Enter CSV Filename (include .csv to name): ")
 
@@ -96,7 +119,7 @@ envelopeDef =   "{\"sharedAccess\":[{" + \
 
 requestBody = envelopeDef;
 
-print requestBody;
+#print requestBody;
 
 # append "/envelopes" to the baseUrl and use in the request
 url = baseUrl + "/shared_access";
