@@ -2,11 +2,12 @@
 #Create a CSV file with the users that will be shared with the admin user
 #Authored by Evan and Julius
 #Disclaimer
-#Testing
 
 import sys, httplib2, json, csv;
 
-# Enter your info:
+# For PRODUCTION please use creds.csv
+# For TESTING Enter your info:
+
 username = "";
 password = "";
 integratorKey = "";
