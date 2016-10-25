@@ -2,7 +2,6 @@
 #Create a CSV file with the users that will be shared with the admin user
 #Authored by Evan and Julius
 #Disclaimer
-#Testing Alpha
 
 import sys, httplib2, json, csv;
 
