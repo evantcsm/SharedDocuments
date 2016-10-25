@@ -7,7 +7,7 @@ import sys, httplib2, json, csv;
 
 # For PRODUCTION please use creds.csv
 # For TESTING Enter your info:
-pressEnter = raw_input("Press Enter to login with creds.csv file")
+pressEnter = raw_input("\nPress Enter to login with creds.csv file")
 credsCsvFile = open('creds.csv')
 csvCreds = csv.reader(credsCsvFile)
 csvCredsList = list(csvCreds)
@@ -49,6 +49,7 @@ loginInfo = data.get('loginAccounts');
 D = loginInfo[0];
 baseUrl = D['baseUrl'];
 accountId = D['accountId'];
+print loginInfo
 
 #--- display results
 print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
@@ -82,9 +83,9 @@ else:
 
 #print sharedOption
 
-adminUser= raw_input("Enter the UserId that is gaining access to multiple user's folders: ")
+adminUser= raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
 
-csvFile = raw_input("Enter CSV Filename (include .csv to name): ")
+csvFile = raw_input("\nEnter CSV Filename (include .csv to name): ")
 
 f = open(csvFile)
 csv_f = csv.reader(f)
@@ -127,10 +128,10 @@ headers = {'X-DocuSign-Authentication': authenticateStr, 'Content-Type': 'applic
 http = httplib2.Http();
 response, content = http.request(url, 'PUT', headers=headers, body=requestBody);
 status = response.get('status');
-if (status != '201' or '200'):
+if (status != '200'):
     print("Error calling webservice, status is: %s\nError description - %s" % (status, content)); sys.exit();
 data = json.loads(content);
 #envId = data.get('envelopeId');
-
+print content
 #--- display results
-print ("Users updated!");
+print ("\nUsers updated!");
