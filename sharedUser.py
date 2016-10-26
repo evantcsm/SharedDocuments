@@ -85,8 +85,9 @@ else:
 
 adminUser= raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
 
-csvFile = raw_input("\nEnter CSV Filename (include .csv to name): ")
+pressEnter = raw_input("\nPress Enter to modify users in the users.csv file")
 
+csvFile = 'users.csv'
 f = open(csvFile)
 csv_f = csv.reader(f)
 csv_list = list(csv_f)
