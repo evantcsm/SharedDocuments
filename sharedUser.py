@@ -5,6 +5,11 @@
 
 import sys, httplib2, json, csv;
 
+print ("\n*******************************"
+       '\n*   TCSM Tool Kit             *'
+       '\n*         beta 1.0            *'
+       '\n*******************************')
+
 # For PRODUCTION please use creds.csv
 # For TESTING Enter your info:
 pressEnter = raw_input("\nPress Enter to login with creds.csv file")
