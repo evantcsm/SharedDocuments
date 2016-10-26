@@ -6,7 +6,7 @@
 import sys, httplib2, json, csv;
 
 print ("\n*******************************"
-       '\n*   TCSM Tool Kit             *'
+       '\n*      TCSM Tool Kit          *'
        '\n*         beta 1.0            *'
        '\n*******************************')
 
@@ -88,7 +88,7 @@ adminUserInput = raw_input("\nEnter the UserId that is gaining access to multipl
 
 if len(adminUserInput) == 36:
     adminUser = adminUserInput
-    
+
 
 else:
     print "\nInvalid UserId. Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)"
@@ -96,10 +96,10 @@ else:
 
     if len(adminUserInput) == 36:
         adminUser = adminUserInput
-        
+
     else:
         sys.exit()
-    
+
 
 pressEnter = raw_input("\nPress Enter to modify users in the users.csv file")
 
@@ -133,11 +133,8 @@ envelopeDef =   "{\"sharedAccess\":[{" + \
                 "]}]}";
 
 # convert the file into a string and add to the request body
-#fileContents = open("test_doc.txt", "r").read();
 
 requestBody = envelopeDef;
-
-#print requestBody;
 
 # append "/envelopes" to the baseUrl and use in the request
 url = baseUrl + "/shared_access";
@@ -148,7 +145,9 @@ status = response.get('status');
 if (status != '200'):
     print("Error calling webservice, status is: %s\nError description - %s" % (status, content)); sys.exit();
 data = json.loads(content);
-#envId = data.get('envelopeId');
+
+print "\nAPI Response: \n"
 print content
+
 #--- display results
 print ("\nUsers updated!");
