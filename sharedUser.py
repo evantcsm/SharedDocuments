@@ -5,6 +5,11 @@
 
 import sys, httplib2, json, csv;
 
+print ("\n*******************************"
+       '\n*   TCSM Tool Kit             *'
+       '\n*         beta 1.0            *'
+       '\n*******************************')
+
 # For PRODUCTION please use creds.csv
 # For TESTING Enter your info:
 pressEnter = raw_input("\nPress Enter to login with creds.csv file")
@@ -17,13 +22,9 @@ for row in csvCredsList:
 
     usersInCSV.append(""+''.join(row))
 
-UN1 = usersInCSV[0]
-PW1 = usersInCSV[1]
-IK1 = usersInCSV[2]
-
-username = UN1
-password = PW1
-integratorKey = IK1
+username = usersInCSV[0]
+password = usersInCSV[1]
+integratorKey = usersInCSV[2]
 
 authenticateStr = "<DocuSignCredentials>" \
                     "<Username>" + username + "</Username>" \
@@ -49,7 +50,7 @@ loginInfo = data.get('loginAccounts');
 D = loginInfo[0];
 baseUrl = D['baseUrl'];
 accountId = D['accountId'];
-print loginInfo
+#print loginInfo
 
 #--- display results
 print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
@@ -83,7 +84,22 @@ else:
 
 #print sharedOption
 
-adminUser= raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
+adminUserInput = raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
+
+if len(adminUserInput) == 36:
+    adminUser = adminUserInput
+    
+
+else:
+    print "\nInvalid UserId. Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)"
+    adminUserInput = raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
+
+    if len(adminUserInput) == 36:
+        adminUser = adminUserInput
+        
+    else:
+        sys.exit()
+    
 
 pressEnter = raw_input("\nPress Enter to modify users in the users.csv file")
 
