@@ -7,16 +7,26 @@ import sys, httplib2, json, csv;
 
 # For PRODUCTION please use creds.csv
 # For TESTING Enter your info:
+pressEnter = raw_input("\nPress Enter to login with creds.csv file")
+credsCsvFile = open('creds.csv')
+csvCreds = csv.reader(credsCsvFile)
+csvCredsList = list(csvCreds)
 
-username = "";
-password = "";
-integratorKey = "";
+usersInCSV = []
+for row in csvCredsList:
+
+    usersInCSV.append(""+''.join(row))
+
+username = usersInCSV[0]
+password = usersInCSV[1]
+integratorKey = usersInCSV[2]
 
 authenticateStr = "<DocuSignCredentials>" \
                     "<Username>" + username + "</Username>" \
                     "<Password>" + password + "</Password>" \
                     "<IntegratorKey>" + integratorKey + "</IntegratorKey>" \
                     "</DocuSignCredentials>";
+
 #
 # STEP 1 - Login
 #
@@ -35,6 +45,7 @@ loginInfo = data.get('loginAccounts');
 D = loginInfo[0];
 baseUrl = D['baseUrl'];
 accountId = D['accountId'];
+#print loginInfo
 
 #--- display results
 print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
@@ -43,12 +54,36 @@ print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
 # STEP 2 - Add the admin user Id and the csv file of the users you are sharing
 #
 
-adminUser= raw_input("Enter the UserId that is gaining access to multiple user's folders: ")
+print ('\nWhat would you like to do?\n'
+                     '\n[1] Share To'
+                     '\n[2] Share From'
+                     '\n[3] Remove Sharing')
 
-sharedOption = raw_input("Enter shared_to to share the users folders with the admin or enter not_shared to remove access: ")
+multi = int(raw_input("\nPlease enter your selection: "))
 
-csvFile = raw_input("Enter CSV Filename (include .csv to name): ")
+sharedOption = ""
 
+if multi == 1:
+    sharedOption = 'shared_to'
+elif multi== 2:
+    sharedOption = 'shared_from'
+elif multi== 3:
+    sharedOption = 'not_shared'
+else:
+    print"\nInvalid Choice"
+    print ('\nWhat would you like to do?\n'
+                         '\n[1] Share To'
+                         '\n[2] Share From'
+                         '\n[3] Remove Sharing')
+    int(raw_input("\nPlease enter your selection: "))
+
+#print sharedOption
+
+adminUser= raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
+
+pressEnter = raw_input("\nPress Enter to modify users in the users.csv file")
+
+csvFile = 'users.csv'
 f = open(csvFile)
 csv_f = csv.reader(f)
 csv_list = list(csv_f)
@@ -62,7 +97,8 @@ for row in csv_list:
 
 newData = "" +''.join(listData);
 
-print newData
+#uncomment newData to see users passed in API call
+#print newData
 
 
 
@@ -81,7 +117,7 @@ envelopeDef =   "{\"sharedAccess\":[{" + \
 
 requestBody = envelopeDef;
 
-print requestBody;
+#print requestBody;
 
 # append "/envelopes" to the baseUrl and use in the request
 url = baseUrl + "/shared_access";
@@ -89,10 +125,10 @@ headers = {'X-DocuSign-Authentication': authenticateStr, 'Content-Type': 'applic
 http = httplib2.Http();
 response, content = http.request(url, 'PUT', headers=headers, body=requestBody);
 status = response.get('status');
-if (status != '201' or '200'):
+if (status != '200'):
     print("Error calling webservice, status is: %s\nError description - %s" % (status, content)); sys.exit();
 data = json.loads(content);
 #envId = data.get('envelopeId');
-
+print content
 #--- display results
-print ("Users updated!");
+print ("\nUsers updated!");
