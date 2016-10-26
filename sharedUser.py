@@ -17,13 +17,9 @@ for row in csvCredsList:
 
     usersInCSV.append(""+''.join(row))
 
-UN1 = usersInCSV[0]
-PW1 = usersInCSV[1]
-IK1 = usersInCSV[2]
-
-username = UN1
-password = PW1
-integratorKey = IK1
+username = usersInCSV[0]
+password = usersInCSV[1]
+integratorKey = usersInCSV[2]
 
 authenticateStr = "<DocuSignCredentials>" \
                     "<Username>" + username + "</Username>" \
@@ -49,7 +45,7 @@ loginInfo = data.get('loginAccounts');
 D = loginInfo[0];
 baseUrl = D['baseUrl'];
 accountId = D['accountId'];
-print loginInfo
+#print loginInfo
 
 #--- display results
 print ("baseUrl = %s\naccountId = %s" % (baseUrl, accountId));
