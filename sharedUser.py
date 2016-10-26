@@ -84,7 +84,7 @@ else:
 
 #print sharedOption
 
-adminUserInput = raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
+adminUserInput = raw_input("\nEnter the host UserId: ")
 
 if len(adminUserInput) == 36:
     adminUser = adminUserInput
@@ -92,7 +92,7 @@ if len(adminUserInput) == 36:
 
 else:
     print "\nInvalid UserId. Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)"
-    adminUserInput = raw_input("\nEnter the UserId that is gaining access to multiple user's folders: ")
+    adminUserInput = raw_input("\nEnter the host UserId: ")
 
     if len(adminUserInput) == 36:
         adminUser = adminUserInput
